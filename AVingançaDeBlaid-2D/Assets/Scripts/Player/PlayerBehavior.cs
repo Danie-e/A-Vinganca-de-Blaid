@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    [SerializeField]
+    private float movieSpead = 10;
+
     private InputMenager inputMenager;
     void Start()
     {
@@ -10,7 +13,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Update()
     {
-        float movieDirection = inputMenager.Movement;
+        float movieDirection = inputMenager.Movement * Time.deltaTime * 5;
         transform.Translate(movieDirection, 0, 0);
     }
+
 }
