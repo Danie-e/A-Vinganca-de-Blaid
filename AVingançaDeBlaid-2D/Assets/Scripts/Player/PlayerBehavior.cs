@@ -10,10 +10,12 @@ public class PlayerBehavior : MonoBehaviour
     private float jumpForce = 3;
 
     private Rigidbody2D rigidbody;
+    private IsGroundedChecker groundedChecker;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        groundedChecker = GetComponent<IsGroundedChecker>();
     }
 
     private void Start()
@@ -23,6 +25,9 @@ public class PlayerBehavior : MonoBehaviour
 
     private void HandleJump()
     {
+        if (!groundedChecker.IsGrounded())
+            return;
+
         rigidbody.velocity = Vector2.up * jumpForce;
     }
 
