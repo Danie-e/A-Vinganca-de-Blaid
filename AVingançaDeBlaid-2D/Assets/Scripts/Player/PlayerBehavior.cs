@@ -6,6 +6,16 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     private float movieSpead = 10;
 
+    [SerializeField]
+    private float jumpForce = 3;
+
+    private Rigidbody2D rigidbody;
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
+
     private void Start()
     {
         GameMenager.Instance.inputMenager.OnJump += HandleJump;
@@ -13,8 +23,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void HandleJump()
     {
-        Debug.Log("Estou pulando!");
-        Console.WriteLine("Estou pulando!");
+        rigidbody.velocity = Vector2.up * jumpForce;
     }
 
     private void Update()
