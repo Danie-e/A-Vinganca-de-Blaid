@@ -11,6 +11,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private Rigidbody2D rigidbody;
     private IsGroundedChecker groundedChecker;
+    float movieDirection;
 
     private void Awake()
     {
@@ -33,13 +34,22 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Update()
     {
-        float movieDirection = GameMenager.Instance.inputMenager.Movement;
+        MovePlayer();
+        FlipPlayer();
+    }
+    private void MovePlayer()
+    {
+        movieDirection = GameMenager.Instance.inputMenager.Movement;
         transform.Translate(movieDirection * Time.deltaTime * movieSpead, 0, 0);
+    }
+
+    private void FlipPlayer()
+    {
+        movieDirection = GameMenager.Instance.inputMenager.Movement;
 
         if (movieDirection < 0)
             transform.localScale = new Vector3(-1, 1, 1);
         else
             transform.localScale = Vector3.one;
     }
-
 }
