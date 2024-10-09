@@ -35,6 +35,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         float movieDirection = GameMenager.Instance.inputMenager.Movement;
         transform.Translate(movieDirection * Time.deltaTime * movieSpead, 0, 0);
+
+        if (movieDirection < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+        else
+            transform.localScale = Vector3.one;
     }
 
 }
