@@ -1,15 +1,25 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class MeleeEnemy : BaseEnemy
 {
+
     [SerializeField] private Transform detectPosition;
     [SerializeField] private Vector2 detectBoxSize;
     [SerializeField] private LayerMask playerLayer;
 
     protected override void Update()
     {
-        print("Is in singht?" + PlayerInSight());
+        VerifyCanAttack();
+    }
+
+    private void VerifyCanAttack()
+    {
+        if (PlayerInSight())
+        {
+            animator.SetTrigger("attack");
+        }
     }
 
     private bool PlayerInSight()
