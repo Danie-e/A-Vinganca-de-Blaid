@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
@@ -14,6 +13,9 @@ public class PlayerAnim : MonoBehaviour
         playerHealth = GetComponent<Health>();
 
         playerHealth.OnHurt += PlayerHurtAnim;
+        playerHealth.OnDead += PlayerDeadAnim;
+
+        GameMenager.Instance.inputMenager.OnAttack += PlayerAttackAnim;
     }
 
     private void Update()
@@ -22,6 +24,16 @@ public class PlayerAnim : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
 
         animator.SetBool("isJumped", !isGroundedChecker.IsGrounded());
+    }
+
+    private void PlayerAttackAnim()
+    {
+        animator.SetTrigger("attack");
+    }
+
+    private void PlayerDeadAnim()
+    {
+        animator.SetTrigger("dead");
     }
 
     private void PlayerHurtAnim()
