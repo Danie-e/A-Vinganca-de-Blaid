@@ -380,6 +380,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  attackCooldown: 1
 --- !u!95 &628152246
 Animator:
   serializedVersion: 5
@@ -461,6 +462,7 @@ GameObject:
   - component: {fileID: 1101432438}
   - component: {fileID: 1101432443}
   - component: {fileID: 1101432445}
+  - component: {fileID: 1101432446}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -672,6 +674,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6597488e78965d4893589b6fbb554cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1101432446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101432437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55ccbf231e4a5441ad944deb25d2544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 3
 --- !u!1 &1827743727
 GameObject:
   m_ObjectHideFlags: 0
