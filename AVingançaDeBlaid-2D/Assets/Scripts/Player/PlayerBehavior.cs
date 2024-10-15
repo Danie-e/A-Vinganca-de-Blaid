@@ -17,6 +17,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         groundedChecker = GetComponent<IsGroundedChecker>();
+        GetComponent<Health>().OnDead += HandlePlayerDeath;
     }
 
     private void Start()
@@ -52,4 +53,11 @@ public class PlayerBehavior : MonoBehaviour
         else
             transform.localScale = Vector3.one;
     }
+    private void HandlePlayerDeath()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        GameMenager.Instance.inputMenager.DisablePlayerInput();
+    }
+
 }

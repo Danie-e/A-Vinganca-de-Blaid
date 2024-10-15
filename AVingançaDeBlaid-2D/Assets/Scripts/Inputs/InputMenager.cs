@@ -19,6 +19,8 @@ public class InputMenager : MonoBehaviour
 
     }
 
+    public void DisablePlayerInput() => playerControls.GamePlay.Disable();
+
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
         OnAttack?.Invoke();
