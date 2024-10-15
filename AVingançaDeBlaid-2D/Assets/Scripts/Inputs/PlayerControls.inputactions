@@ -68,7 +68,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
+                    "name": "Button",
                     "id": "7a760817-698b-4f97-be93-03e695739851",
                     "path": "1DAxis",
                     "interactions": "",
@@ -101,6 +101,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Analogic",
+                    "id": "30b13977-1b5d-4a63-a475-759c0d97e9d3",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Moviment",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "9e52af7a-93f8-4a49-bdd4-99b326ac2b9a",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Moviment",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ef85a7a3-d825-4b53-8051-8d05912fa768",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Moviment",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "676f4fc1-c33a-4409-abb0-baef59d80aa5",
                     "path": "<Keyboard>/space",
@@ -124,6 +157,17 @@
                 },
                 {
                     "name": "",
+                    "id": "67209dfe-75ad-4c3d-b868-431f28a6dcba",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a8ec06ac-c42a-4f9d-859b-290f8f824560",
                     "path": "<Keyboard>/z",
                     "interactions": "",
@@ -136,7 +180,7 @@
                 {
                     "name": "",
                     "id": "608f6e4b-5e8f-4b85-a7a8-1e6e8740cf0e",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
