@@ -5,11 +5,13 @@ public abstract class BaseEnemy : MonoBehaviour
 {
     protected Animator animator;
     protected Health health;
+    protected AudioSource audioSource;
 
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
+        audioSource = GetComponent<AudioSource>();
 
         health.OnHurt += PlayHurtAnim;
         health.OnDead += HandleDeath;

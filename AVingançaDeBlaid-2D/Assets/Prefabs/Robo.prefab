@@ -172,7 +172,10 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackCooldown: 1
+  attackCooldown: 2
+  audioAttack: {fileID: 8300000, guid: d4caee62ad7f56545b3715fc2882fa08, type: 3}
+  audioHit: {fileID: 8300000, guid: de38fec98a1f8e7419b5f2ca865cc804, type: 3}
+  audioDie: {fileID: 8300000, guid: 9312a826f0245d04ab4b5b5627dd9d15, type: 3}
 --- !u!114 &5250190464399819485
 MonoBehaviour:
   m_ObjectHideFlags: 0

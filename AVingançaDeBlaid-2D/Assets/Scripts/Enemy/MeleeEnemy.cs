@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -10,7 +9,18 @@ public class MeleeEnemy : BaseEnemy
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float attackCooldown;
 
+    [Header("Audio properties")]
+    [SerializeField] private AudioClip audioAttack;
+    [SerializeField] private AudioClip audioHit;
+    [SerializeField] private AudioClip audioDie;
+
     private float cooldownTimer;
+    protected override void Awake()
+    {
+        base.Awake();
+        base.health.OnHurt += PlayHurtAudio;
+        base.health.OnDead += PlayDeadAudio;
+    }
 
     protected override void Update()
     {
@@ -46,14 +56,27 @@ public class MeleeEnemy : BaseEnemy
     {
         if (CheckPlayerInDetectArea().TryGetComponent(out Health playerHealth))
         {
-            print("Making player take damage");
             playerHealth.TakeDamage();
             cooldownTimer = 0;
+            audioSource.clip = audioAttack;
+            audioSource.Play();
         }
     }
 
     private Collider2D CheckPlayerInDetectArea()
     {
         return Physics2D.OverlapBox(detectPosition.position, detectBoxSize, 0f, playerLayer);
+    }
+
+    private void PlayHurtAudio()
+    {
+        audioSource.clip = audioHit;
+        audioSource.Play();
+    }
+
+    private void PlayDeadAudio()
+    {
+        audioSource.clip = audioDie;
+        audioSource.Play();
     }
 }
