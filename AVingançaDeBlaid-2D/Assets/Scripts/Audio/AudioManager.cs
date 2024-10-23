@@ -2,18 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] private AudioMixer AudioMixer;
     [SerializeField] private AudioSource SFXAudioSource;
     [SerializeField] private AudioSource EnviromentAudioSource;
     [SerializeField] private SFXConfig[] SFXConfigs;
 
     private Dictionary<SFX, SFXConfig> SFXs;
+    private Dictionary<MixerGroup, string> MixerGroups;
 
     private void Awake()
     {
+        MixerGroups = new()
+        {
+            {MixerGroup.Master, "MasterVolume" },
+            { MixerGroup.SFX, "SFXVolume"},
+            { MixerGroup.Environment, "EnvironmentVolume"}
+        };
+
         SFXs = SFXConfigs.ToDictionary(sfxConfig => sfxConfig.type, sfxConfig => sfxConfig);
+
     }
 
     public void PlaySFX(SFX type)
@@ -24,6 +35,26 @@ public class AudioManager : MonoBehaviour
             SFXAudioSource.PlayOneShot(config.AudioClip, config.VolumeScale);
         }
     }
+
+    public void SetMixerVolume(MixerGroup group, float normalizeVolume)
+    {
+        string groupString = MixerGroups[group];
+        float volume = Mathf.Log10(normalizeVolume) * 20;
+        AudioMixer.SetFloat(groupString, volume);
+    }
+
+    public float GetMixerVolume(MixerGroup group, bool normalize = true)
+    {
+        string groupString = MixerGroups[group];
+        AudioMixer.GetFloat(groupString, out float volume);
+
+        if (normalize)
+        {
+            volume = Mathf.Pow(10, volume / 20);
+        }
+        return volume;
+    }
+
 }
 
 public enum SFX
@@ -34,6 +65,13 @@ public enum SFX
     PlayerHurt,
     PlayerDeath,
     ButtonClick
+}
+
+public enum MixerGroup
+{
+    Master,
+    SFX,
+    Environment
 }
 
 [Serializable]
