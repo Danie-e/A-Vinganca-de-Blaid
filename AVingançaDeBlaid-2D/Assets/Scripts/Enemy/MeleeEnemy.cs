@@ -1,20 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public class MeleeEnemy : BaseEnemy
 {
-
+    [Header("Attack properties")]
     [SerializeField] private Transform detectPosition;
     [SerializeField] private Vector2 detectBoxSize;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float attackCooldown;
 
-    [Header("Audio properties")]
-    [SerializeField] private AudioClip audioAttack;
-    [SerializeField] private AudioClip audioHit;
-    [SerializeField] private AudioClip audioDie;
-
+    [Header("Audio properties")] 
+    [SerializeField] private AudioClip[] audioClips;
+    
     private float cooldownTimer;
+
     protected override void Awake()
     {
         base.Awake();
@@ -30,8 +28,7 @@ public class MeleeEnemy : BaseEnemy
 
     private void VerifyCanAttack()
     {
-        if (cooldownTimer < attackCooldown)
-            return;
+        if (cooldownTimer < attackCooldown || canAttack == false) return;
         if (PlayerInSight())
         {
             animator.SetTrigger("attack");
@@ -39,27 +36,14 @@ public class MeleeEnemy : BaseEnemy
         }
     }
 
-    private bool PlayerInSight()
-    {
-        Collider2D playerCollider = CheckPlayerInDetectArea();
-        return playerCollider != null;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (detectPosition == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(detectPosition.position, detectBoxSize);
-    }
-
     private void AttackPlayer()
     {
+        audioSource.clip = audioClips[0];
+        cooldownTimer = 0;
         if (CheckPlayerInDetectArea().TryGetComponent(out Health playerHealth))
         {
+            print("Making player take damage");
             playerHealth.TakeDamage();
-            cooldownTimer = 0;
-            audioSource.clip = audioAttack;
-            audioSource.Play();
         }
     }
 
@@ -68,15 +52,28 @@ public class MeleeEnemy : BaseEnemy
         return Physics2D.OverlapBox(detectPosition.position, detectBoxSize, 0f, playerLayer);
     }
 
+    private bool PlayerInSight()
+    {
+        Collider2D playerCollider = CheckPlayerInDetectArea();
+        return playerCollider != null;
+    }
+
     private void PlayHurtAudio()
     {
-        audioSource.clip = audioHit;
+        audioSource.clip = audioClips[1];
         audioSource.Play();
     }
 
     private void PlayDeadAudio()
     {
-        audioSource.clip = audioDie;
+        audioSource.clip = audioClips[2];
         audioSource.Play();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (detectPosition == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(detectPosition.position, detectBoxSize);
     }
 }

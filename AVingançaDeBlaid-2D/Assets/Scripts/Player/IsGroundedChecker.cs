@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class IsGroundedChecker : MonoBehaviour
 {
-    [SerializeField] private Transform checkPosition;
+    [SerializeField] private Transform checkerPosition;
     [SerializeField] private Vector2 checkerSize;
     [SerializeField] private LayerMask groundLayer;
-
     public bool IsGrounded()
     {
-        return Physics2D.OverlapBox(checkPosition.position, checkerSize, 0f, groundLayer);
+        return Physics2D.OverlapBox(checkerPosition.position, checkerSize, 0f, groundLayer);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if (checkPosition == null) return;
+        if (checkerPosition == null) return;
         if (IsGrounded())
         {
             Gizmos.color = Color.red;
@@ -22,6 +21,6 @@ public class IsGroundedChecker : MonoBehaviour
         {
             Gizmos.color = Color.green;
         }
-        Gizmos.DrawWireCube(checkPosition.position, checkerSize);
+        Gizmos.DrawWireCube(checkerPosition.position, checkerSize);
     }
 }

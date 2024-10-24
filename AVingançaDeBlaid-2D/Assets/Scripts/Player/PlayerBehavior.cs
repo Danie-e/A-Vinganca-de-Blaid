@@ -1,100 +1,99 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    [SerializeField] private float movieSpead = 10;
+    [SerializeField] private float moveSpeed = 5;
     [SerializeField] private float jumpForce = 3;
-
+    
     [Header("Propriedades de ataque")]
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private Transform attackPosition;
     [SerializeField] private LayerMask attackLayer;
 
-    private float movieDirection;
+    private float moveDirection;
+
     private Rigidbody2D rigidbody;
-    private IsGroundedChecker groundedChecker;
     private Health health;
+    private IsGroundedChecker isGroundedCheker;
 
     private void Awake()
-    {
+    {        
         rigidbody = GetComponent<Rigidbody2D>();
-        groundedChecker = GetComponent<IsGroundedChecker>();
+        isGroundedCheker = GetComponent<IsGroundedChecker>();
         health = GetComponent<Health>();
-        health.OnHurt += PlayHurtSound;
+        health.OnHurt += PlayHurtAudio;
         health.OnDead += HandlePlayerDeath;
     }
 
-
     private void Start()
     {
-        GameMenager.Instance.inputMenager.OnJump += HandleJump;
-    }
-
-    private void HandleJump()
-    {
-        if (!groundedChecker.IsGrounded())
-            return;
-
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PlayerJump);
-        rigidbody.velocity = Vector2.up * jumpForce;
+        GameManager.Instance.InputManager.OnJump += HandleJump;
     }
 
     private void Update()
     {
         MovePlayer();
-        FlipPlayer();
+        FlipSpriteAccordingToMoveDirection();
     }
+
     private void MovePlayer()
     {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PayerWalk);
-        movieDirection = GameMenager.Instance.inputMenager.Movement;
-        transform.Translate(movieDirection * Time.deltaTime * movieSpead, 0, 0);
+        moveDirection = GameManager.Instance.InputManager.Movement;
+        transform.Translate(moveDirection * Time.deltaTime * moveSpeed, 0, 0);
     }
 
-    private void FlipPlayer()
+    private void FlipSpriteAccordingToMoveDirection()
     {
-        movieDirection = GameMenager.Instance.inputMenager.Movement;
-
-        if (movieDirection < 0)
+        if (moveDirection < 0)
+        {
             transform.localScale = new Vector3(-1, 1, 1);
-        else
+        }
+        else if (moveDirection > 0)
+        {
             transform.localScale = Vector3.one;
+        }
     }
+
+    private void HandleJump()
+    {
+        if (isGroundedCheker.IsGrounded() == false) return;
+        rigidbody.velocity += Vector2.up * jumpForce;
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerJump);
+    }
+
+    private void PlayHurtAudio()
+    {
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
+    }
+
     private void HandlePlayerDeath()
     {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
         GetComponent<Collider2D>().enabled = false;
         rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-        GameMenager.Instance.inputMenager.DisablePlayerInput();
-    }
-
-    private void PlayHurtSound()
-    {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
-    }
-    private void PlayWalkSound()
-    {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PayerWalk);
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
+        GameManager.Instance.InputManager.DisablePlayerInput();
     }
 
     private void Attack()
     {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
-        Collider2D[] hittedEnemies = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, attackLayer);
-        print("Making enemy take damage");
-        print(hittedEnemies.Length);
-
+        Collider2D[] hittedEnemies = 
+            Physics2D.OverlapCircleAll(attackPosition.position, attackRange, attackLayer);
+        
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerAttack);
+        
         foreach (Collider2D hittedEnemy in hittedEnemies)
         {
-            print("Checking enemy");
             if (hittedEnemy.TryGetComponent(out Health enemyHealth))
             {
-                print("Getting damage");
                 enemyHealth.TakeDamage();
             }
         }
+    }
+
+    private void PlayWalkSound()
+    {
+        GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerWalk);
     }
 
     private void OnDrawGizmos()
@@ -102,5 +101,4 @@ public class PlayerBehavior : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
     }
-
 }

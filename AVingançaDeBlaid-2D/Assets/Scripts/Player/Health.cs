@@ -17,8 +17,12 @@ public class Health : MonoBehaviour
     private void HandleDamageTaken()
     {
         if (lives <= 0)
+        {
             OnDead?.Invoke();
+        }
         else
+        {
             OnHurt?.Invoke();
+        }
     }
 }

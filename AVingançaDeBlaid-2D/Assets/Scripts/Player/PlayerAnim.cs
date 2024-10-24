@@ -2,42 +2,40 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
-    private IsGroundedChecker isGroundedChecker;
     private Animator animator;
+    private IsGroundedChecker groundedChecker;
     private Health playerHealth;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        isGroundedChecker = GetComponent<IsGroundedChecker>();
+        groundedChecker = GetComponent<IsGroundedChecker>();
         playerHealth = GetComponent<Health>();
 
-        playerHealth.OnHurt += PlayerHurtAnim;
-        playerHealth.OnDead += PlayerDeadAnim;
-
-        GameMenager.Instance.inputMenager.OnAttack += PlayerAttackAnim;
+        GameManager.Instance.InputManager.OnAttack += PlayAttackAnim;
+        playerHealth.OnHurt += PlayHurtAnim;
+        playerHealth.OnDead += PlayDeadAnim;
     }
 
     private void Update()
     {
-        bool isMoving = GameMenager.Instance.inputMenager.Movement != 0;
+        bool isMoving = GameManager.Instance.InputManager.Movement != 0;
         animator.SetBool("isMoving", isMoving);
-
-        animator.SetBool("isJumped", !isGroundedChecker.IsGrounded());
+        animator.SetBool("isJumping", !groundedChecker.IsGrounded());
     }
 
-    private void PlayerAttackAnim()
+    private void PlayAttackAnim()
     {
         animator.SetTrigger("attack");
     }
 
-    private void PlayerDeadAnim()
-    {
-        animator.SetTrigger("dead");
-    }
-
-    private void PlayerHurtAnim()
+    private void PlayHurtAnim()
     {
         animator.SetTrigger("hurt");
+    }
+
+    private void PlayDeadAnim()
+    {
+        animator.SetTrigger("dead");
     }
 }

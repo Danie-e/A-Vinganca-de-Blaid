@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OptionsUI : MonoBehaviour
 {
-    [SerializeField] private Button backButtom;
+    [SerializeField] private Button backButton;
 
     [SerializeField] private Slider MasterVolumeSlider;
     [SerializeField] private Slider SFXVolumeSlider;
@@ -12,34 +11,35 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        backButtom.onClick.AddListener(ClosePanel);
+        backButton.onClick.AddListener(ClosePanel);
 
-        MasterVolumeSlider.onValueChanged.AddListener(onMasterVolumeSliderChanged);
-        SFXVolumeSlider.onValueChanged.AddListener(onSFXVolumeSliderChanged);
-        EnvironmentVolumeSlider.onValueChanged.AddListener(onEnvironmentVolumeSliderChanged);
+        MasterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeSliderChanged);
+        SFXVolumeSlider.onValueChanged.AddListener(OnSFXVolumeSliderChanged);
+        EnvironmentVolumeSlider.onValueChanged.AddListener(OnEnvironmentVolumeSliderChanged);
 
-        MasterVolumeSlider.SetValueWithoutNotify(GameMenager.Instance.AudioManager.GetMixerVolume(MixerGroup.Master));
-        SFXVolumeSlider.SetValueWithoutNotify(GameMenager.Instance.AudioManager.GetMixerVolume(MixerGroup.SFX));
-        EnvironmentVolumeSlider.SetValueWithoutNotify(GameMenager.Instance.AudioManager.GetMixerVolume(MixerGroup.Environment));
+        MasterVolumeSlider.SetValueWithoutNotify(GameManager.Instance.AudioManager.GetMixerVolume(MixerGroup.Master));
+        SFXVolumeSlider.SetValueWithoutNotify(GameManager.Instance.AudioManager.GetMixerVolume(MixerGroup.SFX));
+        EnvironmentVolumeSlider.SetValueWithoutNotify(GameManager.Instance.AudioManager.GetMixerVolume(MixerGroup.Environment));
     }
+
     private void ClosePanel()
     {
-        GameMenager.Instance.AudioManager.PlaySFX(SFX.ButtonClick);
+        GameManager.Instance.AudioManager.PlaySFX(SFX.ButtonClick);
         this.gameObject.SetActive(false);
     }
 
-    private void onMasterVolumeSliderChanged(float value)
+    private void OnMasterVolumeSliderChanged(float value)
     {
-        GameMenager.Instance.AudioManager.SetMixerVolume(MixerGroup.Master, value);
+        GameManager.Instance.AudioManager.SetMixerVolume(MixerGroup.Master, value);
     }
 
-    private void onSFXVolumeSliderChanged(float value)
+    private void OnSFXVolumeSliderChanged(float value)
     {
-        GameMenager.Instance.AudioManager.SetMixerVolume(MixerGroup.SFX, value);
-    }
-    private void onEnvironmentVolumeSliderChanged(float value)
-    {
-        GameMenager.Instance.AudioManager.SetMixerVolume(MixerGroup.Environment, value);
+        GameManager.Instance.AudioManager.SetMixerVolume(MixerGroup.SFX, value);
     }
 
+    private void OnEnvironmentVolumeSliderChanged(float value)
+    {
+        GameManager.Instance.AudioManager.SetMixerVolume(MixerGroup.Environment, value);
+    }
 }
