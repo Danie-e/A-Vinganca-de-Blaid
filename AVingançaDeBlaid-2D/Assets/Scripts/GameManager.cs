@@ -41,4 +41,8 @@ public class GameManager : MonoBehaviour
             Destroy(BossDoor);
         }
     }
+    public void UpdateLives(int amount)
+    {
+        UIManager.UpdateLivesText(amount);
+    }
 }

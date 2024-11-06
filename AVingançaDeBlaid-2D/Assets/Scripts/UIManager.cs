@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI keyText;
+    [SerializeField] private TextMeshProUGUI keyText; 
+    [SerializeField] private TextMeshProUGUI livesText;
 
     [Header("Panels")]
     [SerializeField] private GameObject OptionsPanel;
@@ -41,5 +42,9 @@ public class UIManager : MonoBehaviour
     public void UpdatekeysLeftText(int totalValue, int leftValue)
     {
         keyText.text = $"{leftValue}/{totalValue}";
+    }
+    public void UpdateLivesText(int amount)
+    {
+        livesText.text = $"{amount}";
     }
 }
