@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
         totalKeys = FindObjectsOfType<CollectableKey>().Length;
         keysLeftToCollect = totalKeys;
-        print(totalKeys);
+        UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
 
         InputManager = new InputManager();
     }
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public void UpdateKeysLeft()
     {
         keysLeftToCollect--;
+        UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
         CheckAllKeysCollected();
     }
 

@@ -1,7 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI keyText;
+
     [Header("Panels")]
     [SerializeField] private GameObject OptionsPanel;
     [SerializeField] private GameObject PausePanel;
@@ -33,5 +36,10 @@ public class UIManager : MonoBehaviour
     {
         print("Set options to be opened");
         OptionsPanel.SetActive(true);
+    }
+
+    public void UpdatekeysLeftText(int totalValue, int leftValue)
+    {
+        keyText.text = $"{leftValue}/{totalValue}";
     }
 }
