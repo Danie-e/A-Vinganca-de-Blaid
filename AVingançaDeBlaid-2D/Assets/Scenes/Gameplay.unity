@@ -9346,7 +9346,7 @@ GameObject:
   - component: {fileID: 1981913512}
   - component: {fileID: 1981913514}
   - component: {fileID: 1981913515}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9512,7 +9512,8 @@ MonoBehaviour:
   attackPosition: {fileID: 739592300}
   attackLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
+  hitParticle: {fileID: 4021103657954561960, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
 --- !u!114 &1981913512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11296,6 +11297,18 @@ PrefabInstance:
     - target: {fileID: 2919689756584835665, guid: 4199e5acc2e78114994c82bb8df506d4, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2919689756584835665, guid: 4199e5acc2e78114994c82bb8df506d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397436041233862566, guid: 4199e5acc2e78114994c82bb8df506d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937204074536341329, guid: 4199e5acc2e78114994c82bb8df506d4, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

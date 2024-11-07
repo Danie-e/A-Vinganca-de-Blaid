@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public AudioManager AudioManager;
 
     private int totalKeys;
-    private int keysLeftToCollect;
+    private int keysLeftToCollect=0;
 
     private void Awake()
     {
@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         totalKeys = FindObjectsOfType<CollectableKey>().Length;
-        keysLeftToCollect = totalKeys;
         UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
 
         InputManager = new InputManager();
@@ -28,14 +27,14 @@ public class GameManager : MonoBehaviour
 
     public void UpdateKeysLeft()
     {
-        keysLeftToCollect--;
+        keysLeftToCollect++;
         UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
         CheckAllKeysCollected();
     }
 
     private void CheckAllKeysCollected()
     {
-        if (keysLeftToCollect <= 0)
+        if (keysLeftToCollect == 5)
         {
             Destroy(BossDoor);
         }

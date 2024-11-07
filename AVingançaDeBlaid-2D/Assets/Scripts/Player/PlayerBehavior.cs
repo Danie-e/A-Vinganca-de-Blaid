@@ -4,11 +4,12 @@ public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5;
     [SerializeField] private float jumpForce = 3;
-    
+
     [Header("Propriedades de ataque")]
     [SerializeField] private float attackRange = 1f;
     [SerializeField] private Transform attackPosition;
     [SerializeField] private LayerMask attackLayer;
+    [SerializeField] private ParticleSystem hitParticle;
 
     private float moveDirection;
 
@@ -17,7 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     private IsGroundedChecker isGroundedCheker;
 
     private void Awake()
-    {        
+    {
         rigidbody = GetComponent<Rigidbody2D>();
         isGroundedCheker = GetComponent<IsGroundedChecker>();
         health = GetComponent<Health>();
@@ -66,6 +67,7 @@ public class PlayerBehavior : MonoBehaviour
     private void HandleHurt()
     {
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerHurt);
+        PlayHitParticle();
         UpdateLives(health.GetLives());
     }
 
@@ -75,6 +77,7 @@ public class PlayerBehavior : MonoBehaviour
         rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerDeath);
         GameManager.Instance.InputManager.DisablePlayerInput();
+        PlayHitParticle();
         UpdateLives(health.GetLives());
     }
     private void UpdateLives(int amount)
@@ -84,11 +87,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Attack()
     {
-        Collider2D[] hittedEnemies = 
+        Collider2D[] hittedEnemies =
             Physics2D.OverlapCircleAll(attackPosition.position, attackRange, attackLayer);
-        
+
         GameManager.Instance.AudioManager.PlaySFX(SFX.PlayerAttack);
-        
+
         foreach (Collider2D hittedEnemy in hittedEnemies)
         {
             if (hittedEnemy.TryGetComponent(out Health enemyHealth))
@@ -107,5 +110,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
+    }
+    private void PlayHitParticle()
+    {
+        ParticleSystem instantiatedParticle = Instantiate(hitParticle, transform.position, transform.rotation);
+        instantiatedParticle.Play();
     }
 }

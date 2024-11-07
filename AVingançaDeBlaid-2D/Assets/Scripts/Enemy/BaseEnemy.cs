@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(AudioSource))]
 public abstract class BaseEnemy : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem hitParticle;
     protected Animator animator;
     protected AudioSource audioSource;
     protected Health health;
@@ -16,19 +17,24 @@ public abstract class BaseEnemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         health = GetComponent<Health>();
 
-        health.OnHurt += PlayHurtAnim;
+        health.OnHurt += HandleHurt;
         health.OnDead += HandleDeath;
     }
 
     protected abstract void Update();
 
-    private void PlayHurtAnim() => animator.SetTrigger("hurt");
-    
+    private void HandleHurt()
+    {
+        animator.SetTrigger("hurt");
+        PlayHitParticle();
+    }
+
     private void HandleDeath()
     {
         canAttack = false;
         GetComponent<Collider2D>().enabled = false;
         animator.SetTrigger("dead");
+        PlayHitParticle();
         StartCoroutine(DestroyEnemy(2));
     }
 
@@ -36,5 +42,11 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
+    }
+
+    private void PlayHitParticle()
+    {
+        ParticleSystem instantiatedParticle = Instantiate(hitParticle, transform.position, transform.rotation);
+        instantiatedParticle.Play();
     }
 }
