@@ -4,7 +4,14 @@ using UnityEngine;
 public class BossBehavior : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
+
+    [Header("Attack properties")]
     [SerializeField] private float AttackRanger = 1f;
+    [SerializeField] private float AttackSize = 1f;
+    [SerializeField] private Vector3 AttackOffset;
+    [SerializeField] private LayerMask AttackMask;
+
+    private Vector3 attackPosition;
 
     private Rigidbody2D rigidbody;
     private Transform playerPosition;
@@ -54,8 +61,28 @@ public class BossBehavior : MonoBehaviour
         else
             canAttack = false;
     }
+
+    private void Attack()
+    {
+        attackPosition = transform.position;
+        attackPosition += transform.right * AttackOffset.x;
+        attackPosition += transform.up * AttackOffset.y;
+
+        Collider2D collisionInfo = Physics2D.OverlapCircle(attackPosition, AttackSize, AttackMask);
+        if (collisionInfo != null)
+        {
+            collisionInfo.GetComponent<Health>().TakeDamage();
+        }
+    }
+
     public bool GetCanAttack()
     {
         return canAttack;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(attackPosition, AttackSize);
     }
 }
