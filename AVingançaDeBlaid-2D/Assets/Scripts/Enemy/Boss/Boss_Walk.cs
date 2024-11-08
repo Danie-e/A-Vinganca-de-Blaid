@@ -14,12 +14,15 @@ public class Boss_Walk : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         bossBehavior.FollowPlayer();
+        if (bossBehavior.GetCanAttack())
+            animator.SetTrigger("Attack");
 
     }
 
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.ResetTrigger("Attack");
 
     }
 
