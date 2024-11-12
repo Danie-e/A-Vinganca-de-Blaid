@@ -9,6 +9,12 @@ public class BossBehavior : MonoBehaviour
     [SerializeField] private float AttackSize = 1f;
     [SerializeField] private Vector3 AttackOffset;
     [SerializeField] private LayerMask AttackMask;
+    [SerializeField] private ParticleSystem hitParticle;
+
+    private AudioSource audioSource;
+
+    [Header("Audio properties")]
+    [SerializeField] private AudioClip[] audioClips;
 
     private Vector3 attackPosition;
 
@@ -25,15 +31,15 @@ public class BossBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
         rigidbody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
-        health.OnHurt += PlayHurtAnim;
-        health.OnDead += HandleDeath;
+        health.OnHurt += BossHurt;
+        health.OnDead += BossDeath;
     }
 
     private void Start()
     {
         playerPosition = GameManager.Instance.GetPlayer().transform;
-
     }
     public void FollowPlayer()
     {
@@ -81,6 +87,8 @@ public class BossBehavior : MonoBehaviour
         Collider2D collisionInfo = Physics2D.OverlapCircle(attackPosition, AttackSize, AttackMask);
         if (collisionInfo != null)
         {
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
             collisionInfo.GetComponent<Health>().TakeDamage();
         }
     }
@@ -96,18 +104,30 @@ public class BossBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(attackPosition, AttackSize);
     }
 
-    private void PlayHurtAnim()
+    private void BossHurt()
     {
+        PlayHitParticle();
+        audioSource.clip = audioClips[1];
+        audioSource.Play();
         animator.SetTrigger("hurt");
     }
 
-    private void HandleDeath()
+    private void BossDeath()
     {
+        PlayHitParticle();
+        audioSource.clip = audioClips[2];
+        audioSource.Play();
         animator.SetTrigger("dead");
     }
 
     public void StartChasing()
     {
         animator.SetBool("canChase", true);
+    }
+
+    private void PlayHitParticle()
+    {
+        ParticleSystem instantiatedParticle = Instantiate(hitParticle, transform.position, transform.rotation);
+        instantiatedParticle.Play();
     }
 }

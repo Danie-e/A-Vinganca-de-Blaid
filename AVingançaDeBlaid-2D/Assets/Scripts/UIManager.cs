@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private TextMeshProUGUI livesText;
+    [SerializeField] private TextMeshProUGUI victoryText;
 
     [Header("Panels")]
     [SerializeField] private GameObject OptionsPanel;
@@ -16,6 +17,7 @@ public class UIManager : MonoBehaviour
         OptionsPanel.SetActive(false);
         PausePanel.SetActive(false);
         GameOverPanel.SetActive(false);
+        victoryText.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -40,15 +42,21 @@ public class UIManager : MonoBehaviour
         print("Set options to be opened");
         OptionsPanel.SetActive(true);
     }
+
     public void OpenGameOverPanel()
     {
         GameOverPanel.SetActive(true);
+    }
+    public void OpenVictoryText()
+    {
+        victoryText.gameObject.SetActive(true);
     }
 
     public void UpdatekeysLeftText(int totalValue, int leftValue)
     {
         keyText.text = $"{leftValue}/{totalValue}";
     }
+
     public void UpdateLivesText(int amount)
     {
         livesText.text = $"{amount}";

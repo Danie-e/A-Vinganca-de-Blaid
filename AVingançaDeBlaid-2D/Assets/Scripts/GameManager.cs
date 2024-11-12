@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour
         bossFigthTrigger.OnPlayerEnterBossFigth += ActivateBossBehavior;
 
         player.GetComponent<Health>().OnDead += HandleGameOver;
+        boss.GetComponent<Health>().OnDead += HandleVictory;
     }
 
     public void UpdateKeysLeft()
@@ -45,10 +49,7 @@ public class GameManager : MonoBehaviour
             Destroy(BossDoor);
         }
     }
-    public void UpdateLives(int amount)
-    {
-        UIManager.UpdateLivesText(amount);
-    }
+
     public PlayerBehavior GetPlayer() => player;
 
     private void ActivateBossBehavior()
@@ -56,8 +57,25 @@ public class GameManager : MonoBehaviour
         boss.StartChasing();
     }
 
+    public void UpdateLives(int amount)
+    {
+        UIManager.UpdateLivesText(amount);
+    }
+
     private void HandleGameOver()
     {
         UIManager.OpenGameOverPanel();
+    }
+
+    private void HandleVictory()
+    {
+        UIManager.OpenVictoryText();
+        StartCoroutine(GoToCreditsScene());
+    }
+
+    private IEnumerator GoToCreditsScene()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Credits");
     }
 }
