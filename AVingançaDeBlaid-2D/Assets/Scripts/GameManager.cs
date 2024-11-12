@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckAllKeysCollected()
     {
-        if (keysLeftToCollect == 5)
+        if (keysLeftToCollect == totalKeys)
         {
             Destroy(BossDoor);
         }
