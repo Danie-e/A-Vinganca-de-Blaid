@@ -8681,7 +8681,8 @@ GameObject:
   - component: {fileID: 1244278432}
   - component: {fileID: 1244278431}
   - component: {fileID: 1244278436}
-  m_Layer: 0
+  - component: {fileID: 1244278437}
+  m_Layer: 8
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8862,6 +8863,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   AttackRanger: 2
+  AttackSize: 1
+  AttackOffset: {x: 1, y: 0, z: 0}
+  AttackMask:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &1244278437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244278430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5b66a5a4df42d4c99dd63f51380cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 5
 --- !u!1001 &1246269751
 PrefabInstance:
   m_ObjectHideFlags: 0

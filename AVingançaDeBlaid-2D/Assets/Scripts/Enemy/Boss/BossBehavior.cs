@@ -15,13 +15,24 @@ public class BossBehavior : MonoBehaviour
 
     private Rigidbody2D rigidbody;
     private Transform playerPosition;
+    private Health health;
+    private Animator animator;
 
     private bool canAttack = false;
     private bool isFlipped = true;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        health = GetComponent<Health>();
+        rigidbody = GetComponent<Rigidbody2D>();
+
+        health.OnHurt += PlayHurtAnim;
+        health.OnDead += HandleDeath;
+    }
+
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
         playerPosition = GameManager.Instance.GetPlayer().transform;
 
     }
@@ -84,5 +95,15 @@ public class BossBehavior : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPosition, AttackSize);
+    }
+
+    private void PlayHurtAnim()
+    {
+        animator.SetTrigger("hurt");
+    }
+
+    private void HandleDeath()
+    {
+        animator.SetTrigger("dead");
     }
 }
