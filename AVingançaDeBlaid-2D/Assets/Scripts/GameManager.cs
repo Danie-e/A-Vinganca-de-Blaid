@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -28,6 +27,8 @@ public class GameManager : MonoBehaviour
 
         InputManager = new InputManager();
         bossFigthTrigger.OnPlayerEnterBossFigth += ActivateBossBehavior;
+
+        player.GetComponent<Health>().OnDead += HandleGameOver;
     }
 
     public void UpdateKeysLeft()
@@ -53,5 +54,10 @@ public class GameManager : MonoBehaviour
     private void ActivateBossBehavior()
     {
         boss.StartChasing();
+    }
+
+    private void HandleGameOver()
+    {
+        UIManager.OpenGameOverPanel();
     }
 }

@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI keyText; 
+    [SerializeField] private TextMeshProUGUI keyText;
     [SerializeField] private TextMeshProUGUI livesText;
 
     [Header("Panels")]
     [SerializeField] private GameObject OptionsPanel;
     [SerializeField] private GameObject PausePanel;
+    [SerializeField] private GameObject GameOverPanel;
 
     private void Awake()
     {
         OptionsPanel.SetActive(false);
         PausePanel.SetActive(false);
+        GameOverPanel.SetActive(false);
     }
 
     private void Start()
@@ -37,6 +39,10 @@ public class UIManager : MonoBehaviour
     {
         print("Set options to be opened");
         OptionsPanel.SetActive(true);
+    }
+    public void OpenGameOverPanel()
+    {
+        GameOverPanel.SetActive(true);
     }
 
     public void UpdatekeysLeftText(int totalValue, int leftValue)
