@@ -33,7 +33,7 @@ public class PlayerBehavior : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MovePlayer();
         FlipSpriteAccordingToMoveDirection();
@@ -42,7 +42,8 @@ public class PlayerBehavior : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = GameManager.Instance.InputManager.Movement;
-        transform.Translate(moveDirection * Time.deltaTime * moveSpeed, 0, 0);
+        Vector2 directionToMove = new Vector2(moveDirection * moveSpeed, rigidbody.velocity.y);
+        rigidbody.velocity = directionToMove;
     }
 
     private void FlipSpriteAccordingToMoveDirection()

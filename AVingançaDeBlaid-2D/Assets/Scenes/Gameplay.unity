@@ -8578,8 +8578,8 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!19719996 &1117375845
-TilemapCollider2D:
+--- !u!60 &1117375845
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8611,8 +8611,41 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 31.932287, y: 11.056388}
+      - {x: 31.960117, y: 4.927064}
+      - {x: 33.055172, y: 4.9434166}
+      - {x: 33.03313, y: 9.963426}
+      - {x: 50.959923, y: 9.949717}
+      - {x: 50.961212, y: -1.0478816}
+      - {x: 49.982952, y: -2.0180416}
+      - {x: 33.02518, y: -2.0011578}
+      - {x: 32.99478, y: 2.0530794}
+      - {x: 24.003101, y: 2.011079}
+      - {x: 23.992023, y: -3.0147748}
+      - {x: 17.016327, y: -3.0133462}
+      - {x: 17.002676, y: -0.9974873}
+      - {x: 10.001043, y: -1.0295203}
+      - {x: 9.990678, y: -2.9885707}
+      - {x: 3.0275288, y: -2.9678652}
+      - {x: 3.015463, y: -1.0202793}
+      - {x: -6.9838896, y: -0.9895301}
+      - {x: -6.993975, y: 4.993826}
+      - {x: -11.022659, y: 5.0062737}
+      - {x: -11.001439, y: -11.032535}
+      - {x: 52.02604, y: -11.046708}
+      - {x: 52.02117, y: -10.653899}
+      - {x: 52.022587, y: 11.008059}
   m_UseDelaunayMesh: 0
 --- !u!1001 &1189309007
 PrefabInstance:
@@ -9732,7 +9765,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 26681534e8ae6944f9168d7cffa3881c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
