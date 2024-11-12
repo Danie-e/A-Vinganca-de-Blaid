@@ -105,4 +105,9 @@ public class BossBehavior : MonoBehaviour
     {
         animator.SetTrigger("dead");
     }
+
+    public void StartChasing()
+    {
+        animator.SetBool("canChase", true);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
     [Header("Dynamic Game Object")]
     [SerializeField] private GameObject BossDoor;
     [SerializeField] private PlayerBehavior player;
+    [SerializeField] private BossBehavior boss;
+    [SerializeField] private BossFigthTrigger bossFigthTrigger;
 
     [Header("Managers")]
     public UIManager UIManager;
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
         UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
 
         InputManager = new InputManager();
+        bossFigthTrigger.OnPlayerEnterBossFigth += ActivateBossBehavior;
     }
 
     public void UpdateKeysLeft()
@@ -45,4 +49,9 @@ public class GameManager : MonoBehaviour
         UIManager.UpdateLivesText(amount);
     }
     public PlayerBehavior GetPlayer() => player;
+
+    private void ActivateBossBehavior()
+    {
+        boss.StartChasing();
+    }
 }
