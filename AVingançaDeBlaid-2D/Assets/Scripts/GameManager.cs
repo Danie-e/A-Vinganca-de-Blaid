@@ -6,16 +6,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header("Managers")]
+    public AudioManager AudioManager;
+    public UIManager UIManager;
+
     public InputManager InputManager { get; private set; }
     [Header("Dynamic Game Object")]
     [SerializeField] private GameObject BossDoor;
     [SerializeField] private PlayerBehavior player;
     [SerializeField] private BossBehavior boss;
     [SerializeField] private BossFigthTrigger bossFigthTrigger;
-
-    [Header("Managers")]
-    public UIManager UIManager;
-    public AudioManager AudioManager;
 
     private int totalKeys;
     private int keysLeftToCollect = 0;
@@ -25,10 +26,11 @@ public class GameManager : MonoBehaviour
         if (Instance != null) Destroy(this.gameObject);
         Instance = this;
 
+        InputManager = new InputManager();
+
         totalKeys = FindObjectsOfType<CollectableKey>().Length;
         UIManager.UpdatekeysLeftText(totalKeys, keysLeftToCollect);
 
-        InputManager = new InputManager();
         bossFigthTrigger.OnPlayerEnterBossFigth += ActivateBossBehavior;
 
         player.GetComponent<Health>().OnDead += HandleGameOver;
